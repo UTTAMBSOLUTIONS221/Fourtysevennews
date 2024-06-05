@@ -1,8 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Fourtysevennews.Models.Blogs.SystemblognewsDetail
+@{
+    ViewData["Title"] = "Index";
 }
+<div class="row">
+    @if (Model != null)
+    {
+        if (Model.Systemblognews != null)
+        {
+            foreach (var data in Model.Systemblognews)
+            {
+                <div class="col-sm-3">
+                    <a asp-action="Blogdetaildata" asp-controller="Home" asp-route-code="@Guid.NewGuid()" asp-route-Systemblogid="@data.Systemblogid" asp-area="">
+                        <div class="card">
+                            <img src="@Url.Content(data.Systemblogimageurl)" class="card-img-top" height="250" width="250" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        @if (data.Systemblogtitle.Length > 200)
+                                        {
+                                            <h6 class="text-info text-sm text-uppercase">@Html.Raw(data.Systemblogtitle.Substring(0, 200) + " ...")</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6 class="text-info text-sm text-uppercase">@data.Systemblogtitle</h6>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        @if (data.Systemblogdescription.Length > 300)
+                                        {
+                                            <p class="text-dark">@Html.Raw(data.Systemblogdescription.Substring(0, 300) + " ...")</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-dark">@data.Systemblogdescription</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            }
+        }
+    }
 </div>

@@ -1,27 +1,43 @@
-using Fourtysevennews.Models;
+﻿using Fourtysevennews.Models;
+using Fourtysevennews.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Fourtysevennews.Controllers
 {
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly Fourtysevennewsservices bl;
+        public HomeController(IConfiguration config)
         {
-            _logger = logger;
+            bl = new Fourtysevennewsservices(config);
         }
 
-        public IActionResult Index()
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Index(int Page = 0, int PageSize = 10, string? Category = "")
+        {
+            var data = await bl.GetSystemfortysevennewsblogdata(Page, PageSize, Category);
+            return View(data);
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Blogdetaildata(long Systemblogid)
+        {
+            var data = await bl.Getsystemfortysevennewsblogdetaildatabyid(Systemblogid);
+            return View(data);
+        }
+        #region User Profile
+        [HttpGet]
+        public IActionResult Myprofile()
         {
             return View();
         }
+        #endregion
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

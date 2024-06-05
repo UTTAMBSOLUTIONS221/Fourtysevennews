@@ -1,0 +1,72 @@
+﻿@model Fourtysevennews.Models.Blogs.Fortysevennewsblogsdata
+@{
+    ViewData["Title"] = "Blogdetaildata";
+}
+
+<div class="row">
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="row">
+                <div class="col-sm-5">
+                    <img src="@Url.Content(Model.Systemblogimageurl)" class="img-fluid" />
+                </div>
+                <div class="col-sm-7">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="font-weight-bold text-info">@Model.Systemblogtitle</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <p class="text-dark">@Model.Systemblogdescription</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 ml-1">
+                    @for (var i = 0; i < Model.Blogparagraphs.Count; i += 2)
+                    {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-dark">@Model.Blogparagraphs[i].Systemblogparagraph</p>
+                            </div>
+                            @if (i + 1 < Model.Blogparagraphs.Count)
+                            {
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <p class="text-dark">@Model.Blogparagraphs[i + 1].Systemblogparagraph</p>
+                                        </div>
+                                        @if (Model.Blogimages != null)
+                                        {
+                                            for (var ii = 1; ii < Model.Blogimages.Count && ii <= i + 1; ii++)
+                                            {
+                                                <div class="col-sm-4">
+                                                    <img height="100" width="100" class="m-2" src="@Url.Content(Model.Blogimages[ii].Systemblogimageurl)" />
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="row">
+                        @if (Model.Blogimages != null)
+                        {
+                            for (var ii = 2; ii < Model.Blogimages.Count; ii += 3)
+                            {
+                                <div class="col-sm-4">
+                                    <img height="100" width="100" class="m-2" src="@Url.Content(Model.Blogimages[ii].Systemblogimageurl)" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-3">
+        <!-- You can add content to the right column if needed -->
+    </div>
+</div>
